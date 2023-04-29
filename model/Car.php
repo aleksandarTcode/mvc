@@ -1,7 +1,8 @@
 <?php
 class Car
 {
-	public static function GetAll(){
-		return array("BMW","AUDI","MERCEDES");
-	}
+    public static function getAll(): array
+    {
+        return ["Alfa Romeo", "Maserati", "Lancia"];
+    }
 }

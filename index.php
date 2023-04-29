@@ -1,18 +1,23 @@
 <?php
-function __autoload($classname){
-	include "model/".$classname.".php";
-}
+spl_autoload_register(function ($classname) {
+    require_once __DIR__ . "/model/{$classname}.php";
+});
+
 class Controller
 {
-	public $viewbag = array();
-	public $view;
+    public $viewbag = [];
+    public $view;
 
-	public function show_view($v=null){
-		include "view/" . (($v==null)?$this->view:$v) . ".php";
-	}
+    public function showView(string $v = null): void
+    {
+        require_once __DIR__ . "/view/" . ($v ?? $this->view) . ".php";
+    }
 }
-$controller = $_GET['c'];
-$method = $_GET['m'];
-include "controller/" . $controller . ".php";
-$c = new $controller;
-$c->$method();
+
+$controller = $_GET['c'] ?? '';
+$method = $_GET['m'] ?? '';
+if (!empty($controller) && !empty($method)) {
+    require_once __DIR__ . "/controller/{$controller}.php";
+    $c = new $controller;
+    $c->$method();
+}
